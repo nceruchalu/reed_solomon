@@ -3,8 +3,7 @@
 |         |                                                        |
 | ------- | ------------------------------------------------------ |
 | Author  | Nnoduka Eruchalu                                       |
-| Date    | 06/02/2011                                             |
-| Course  | [Error Correcting Codes [EE/CS/MA 127]](http://www.its.caltech.edu/~tho/) |
+| Date    | 03/16/2014                                             |
 
 
 ## Software Technologies
@@ -116,8 +115,7 @@ choices of code parameters:
 * `m=7, t=60`
 * `m=7, t=30`
 
-For each pair of m,t values the simulation outputs a graph RS encoder/decoder's
-error rate as a function of the probability of channel error, Ps.
+For each pair of m,t values the simulation outputs a plot of RS encoder/decoder's error rate as a function of the probability of channel error, Ps.
 This simulation showed that smaller t-values resulted in a faster rise to an error rate of 1 with increasing Ps values.
 
 ###### Simulation Plot for m=7, t=60:
