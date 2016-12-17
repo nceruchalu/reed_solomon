@@ -153,6 +153,20 @@ public:
     void sim_channel(double Ps); // generate rc(x) with Ps symbol error prob.
     void decode();               // decode received vector rc(x);
     bool compare();              // compare c(x) and dc(x)
+
+
+	///////////////////////////////////////////////////////////////////////////
+	// Reed-Solomon set/get method, length of msg must be n
+	// By yuanyuanxiang, yuan_yuanxiang@163.com
+	///////////////////////////////////////////////////////////////////////////
+	void get_original_msg(int *msg);
+	void get_received_msg(int *msg);
+	void set_msgfor_encode(int *msg);	// set message m(x)
+	void get_encoded_msg(int *msg);		// get message c(x)
+	void set_msgfor_decode(int *msg);	// set message rc(x)
+	void get_decoded_msg(int *msg);		// get message dc(x)
+	void rs_encode(int *msg);			// rs_encode by yuanyuanxiang
+	void rs_decode(int *msg);			// rs_decode by yuanyuanxiang
 };
 
 #endif                                                     /* REED_SOLOMON_H_ */

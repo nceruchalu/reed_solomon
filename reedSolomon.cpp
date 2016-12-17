@@ -23,6 +23,7 @@
  *   Mar 16, 2014    Nnoduka Eruchalu    Cleaned up comments
  */
 
+#include "stdafx.h" // Added by yuanyuanxiang
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -350,7 +351,7 @@ void reedSolomon::gen_g_poly() // create the generator polynomial g(x)
  */
 void reedSolomon::update_params()
 {
-    n = pow(2,m) - 1;         // compute n and k
+    n = (int)pow(2.f,m) - 1;  // compute n and k (modified by yuanyuanxiang)
     k = n- 2*t;
     detect_error = false;     // start in state of no transmission error
     
@@ -458,6 +459,11 @@ reedSolomon::reedSolomon(int mm, int tt) // more useful constructor
  */
 reedSolomon::~reedSolomon()  // destructor
 {
+	// 2015/7/29 Detected memory leaks!
+	// Fixed by yuanyuanxiang
+	if (s_x != NULL)
+		delete[] s_x;
+
     delete [] g_x;
     delete [] p_x;
     delete [] m_x;
@@ -986,12 +992,82 @@ void reedSolomon::copy_arr(int * & dst,int * src, int size)
 void reedSolomon::gen_rand_msg()
 {
     // populate first k slots with random GF(2^m) elements
-    int i, mod = pow(2,m);
+    int i, mod = (int)pow(2.f,m); // modified by yuanyuanxiang
     for(i =0; i<k; i++)
         m_x[i] = rand() % mod;
     // zero-out unused slots.
     for(i = k; i < n; i++)
         m_x[i] = 0;
+}
+
+
+/* get original message m(x), created by yuanyuanxiang */
+void reedSolomon::get_original_msg(int *msg)
+{
+	memcpy(msg, m_x, n * sizeof(int));
+}
+
+
+/* get received message rc(x), created by yuanyuanxiang */
+void reedSolomon::get_received_msg(int *msg)
+{
+	memcpy(msg, rc_x, n * sizeof(int));
+}
+
+
+/* set message m(x), created by yuanyuanxiang */
+void reedSolomon::set_msgfor_encode(int *msg)
+{
+	memcpy(m_x, msg, n * sizeof(int));
+}
+
+
+/* get message c(x), created by yuanyuanxiang */
+void reedSolomon::get_encoded_msg(int *msg)
+{
+	memcpy(msg, c_x, n * sizeof(int));
+}
+
+
+/* set message rc(x), created by yuanyuanxiang */
+void reedSolomon::set_msgfor_decode(int *msg)
+{
+	memcpy(rc_x, msg, n * sizeof(int));
+	memcpy(c_x, msg, n * sizeof(int));
+}
+
+
+/* get message dc(x), created by yuanyuanxiang */
+void reedSolomon::get_decoded_msg(int *msg)
+{
+	memcpy(msg, dc_x, n * sizeof(int));
+}
+
+
+/** rs_encode, created by yuanyuanxiang in 2016/9/14. 
+* @note reedSolomon constructor must had been called.
+*/
+void reedSolomon::rs_encode(int *msg)
+{
+	// set_msgfor_encode
+	memcpy(m_x, msg, n * sizeof(int));
+	encode();
+	// get_encoded_msg
+	memcpy(msg, c_x, n * sizeof(int));
+}
+
+
+/** rs_decode, created by yuanyuanxiang in 2016/9/14. 
+* @note reedSolomon constructor must had been called.
+*/
+void reedSolomon::rs_decode(int *msg)
+{
+	// set_msgfor_decode
+	memcpy(rc_x, msg, n * sizeof(int));
+	memcpy(c_x, msg, n * sizeof(int));
+	decode();
+	// get_decoded_msg
+	memcpy(msg, dc_x, n * sizeof(int));
 }
 
 
