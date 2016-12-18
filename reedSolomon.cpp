@@ -23,7 +23,7 @@
  *   Mar 16, 2014    Nnoduka Eruchalu    Cleaned up comments
  */
 
-#include "stdafx.h" // Added by yuanyuanxiang
+//#include "stdafx.h" // Added by yuanyuanxiang
 #include <iostream>
 #include <cstdlib>
 #include <string>
