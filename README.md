@@ -48,7 +48,7 @@ has the following steps:
 * **Computation of the syndrome**
   The syndromes are:
   
-  ````
+  ```
   S_1 = rc(alpha)`;   S_2 = rc(a^2);   ...     ; S_2t = rc(a^2t)
   ```
   And the syndrome polynomial is:
@@ -97,7 +97,7 @@ has the following steps:
   FOR all codewords indexed by i FROM 0 to n-1
     if(at error location) dc_i = rc_i + e
     else                  dc_i = rc_i
- ```
+  ```
 
 
 #### Channel Model:
